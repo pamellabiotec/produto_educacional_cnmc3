@@ -1,0 +1,1888 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChemMatrix RPG - Aventura Científica</title>
+    <link rel="icon" href="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/f9542282-3bbe-4c6a-af46-ea52a3ca0719.png" type="image/png">
+    <meta name="description" content="RPG Interativo para aprender Química: Petróleo, Polímeros e Radioatividade">
+    <meta name="author" content="Prof.ª Pâmella A. Balcaçar">
+    <meta name="keywords" content="química, educação, RPG, petróleo, polímeros, radioatividade, BNCC">
+    
+    <style>
+        :root {
+            /* Primitive Color Tokens */
+            --color-white: rgba(255, 255, 255, 1);
+            --color-black: rgba(0, 0, 0, 1);
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-cream-100: rgba(255, 255, 253, 1);
+            --color-gray-200: rgba(245, 245, 245, 1);
+            --color-gray-300: rgba(167, 169, 169, 1);
+            --color-gray-400: rgba(119, 124, 124, 1);
+            --color-slate-500: rgba(98, 108, 113, 1);
+            --color-brown-600: rgba(94, 82, 64, 1);
+            --color-charcoal-700: rgba(31, 33, 33, 1);
+            --color-charcoal-800: rgba(38, 40, 40, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --color-teal-300: rgba(50, 184, 198, 1);
+            --color-teal-400: rgba(45, 166, 178, 1);
+            --color-teal-500: rgba(33, 128, 141, 1);
+            --color-teal-600: rgba(29, 116, 128, 1);
+            --color-teal-700: rgba(26, 104, 115, 1);
+            --color-teal-800: rgba(41, 150, 161, 1);
+            --color-red-400: rgba(255, 84, 89, 1);
+            --color-red-500: rgba(192, 21, 47, 1);
+            --color-orange-400: rgba(230, 129, 97, 1);
+            --color-orange-500: rgba(168, 75, 47, 1);
+
+            /* RGB versions for opacity control */
+            --color-brown-600-rgb: 94, 82, 64;
+            --color-teal-500-rgb: 33, 128, 141;
+            --color-slate-900-rgb: 19, 52, 59;
+            --color-slate-500-rgb: 98, 108, 113;
+            --color-red-500-rgb: 192, 21, 47;
+            --color-red-400-rgb: 255, 84, 89;
+            --color-orange-500-rgb: 168, 75, 47;
+            --color-orange-400-rgb: 230, 129, 97;
+
+            /* Background color tokens (Light Mode) */
+            --color-bg-1: rgba(59, 130, 246, 0.08);
+            --color-bg-2: rgba(245, 158, 11, 0.08);
+            --color-bg-3: rgba(34, 197, 94, 0.08);
+            --color-bg-4: rgba(239, 68, 68, 0.08);
+            --color-bg-5: rgba(147, 51, 234, 0.08);
+            --color-bg-6: rgba(249, 115, 22, 0.08);
+            --color-bg-7: rgba(236, 72, 153, 0.08);
+            --color-bg-8: rgba(6, 182, 212, 0.08);
+
+            /* Semantic Color Tokens (Light Mode) */
+            --color-background: var(--color-cream-50);
+            --color-surface: var(--color-cream-100);
+            --color-text: var(--color-slate-900);
+            --color-text-secondary: var(--color-slate-500);
+            --color-primary: var(--color-teal-500);
+            --color-primary-hover: var(--color-teal-600);
+            --color-primary-active: var(--color-teal-700);
+            --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
+            --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-btn-primary-text: var(--color-cream-50);
+            --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-error: var(--color-red-500);
+            --color-success: var(--color-teal-500);
+            --color-warning: var(--color-orange-500);
+            --color-info: var(--color-slate-500);
+            --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
+            --color-select-caret: rgba(var(--color-slate-900-rgb), 0.8);
+
+            /* Typography */
+            --font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            --font-size-xs: 11px;
+            --font-size-sm: 12px;
+            --font-size-base: 14px;
+            --font-size-md: 14px;
+            --font-size-lg: 16px;
+            --font-size-xl: 18px;
+            --font-size-2xl: 20px;
+            --font-size-3xl: 24px;
+            --font-size-4xl: 30px;
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 550;
+            --font-weight-bold: 600;
+            --line-height-tight: 1.2;
+            --line-height-normal: 1.5;
+            --letter-spacing-tight: -0.01em;
+
+            /* Spacing */
+            --space-0: 0;
+            --space-1: 1px;
+            --space-2: 2px;
+            --space-4: 4px;
+            --space-6: 6px;
+            --space-8: 8px;
+            --space-10: 10px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --space-24: 24px;
+            --space-32: 32px;
+
+            /* Border Radius */
+            --radius-sm: 6px;
+            --radius-base: 8px;
+            --radius-md: 10px;
+            --radius-lg: 12px;
+            --radius-full: 9999px;
+
+            /* Shadows */
+            --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.02);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+            --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.03);
+
+            /* Animation */
+            --duration-fast: 150ms;
+            --duration-normal: 250ms;
+            --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+
+            /* RPG Custom Colors */
+            --color-xp: #4ade80;
+            --color-level: #fbbf24;
+            --color-matrix: #00ff00;
+            --color-danger: #ef4444;
+        }
+
+        /* Dark mode colors */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-gray-400-rgb: 119, 124, 124;
+                --color-teal-300-rgb: 50, 184, 198;
+                --color-gray-300-rgb: 167, 169, 169;
+                --color-gray-200-rgb: 245, 245, 245;
+                --color-bg-1: rgba(29, 78, 216, 0.15);
+                --color-bg-2: rgba(180, 83, 9, 0.15);
+                --color-bg-3: rgba(21, 128, 61, 0.15);
+                --color-bg-4: rgba(185, 28, 28, 0.15);
+                --color-bg-5: rgba(107, 33, 168, 0.15);
+                --color-bg-6: rgba(194, 65, 12, 0.15);
+                --color-bg-7: rgba(190, 24, 93, 0.15);
+                --color-bg-8: rgba(8, 145, 178, 0.15);
+                --color-background: var(--color-charcoal-700);
+                --color-surface: var(--color-charcoal-800);
+                --color-text: var(--color-gray-200);
+                --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+                --color-primary: var(--color-teal-300);
+                --color-primary-hover: var(--color-teal-400);
+                --color-primary-active: var(--color-teal-800);
+                --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+                --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+                --color-secondary-active: rgba(var(--color-gray-400-rgb), 0.3);
+                --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+                --color-error: var(--color-red-400);
+                --color-success: var(--color-teal-300);
+                --color-warning: var(--color-orange-400);
+                --color-info: var(--color-gray-300);
+                --color-focus-ring: rgba(var(--color-teal-300-rgb), 0.4);
+                --color-btn-primary-text: var(--color-slate-900);
+                --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+                --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
+            }
+        }
+
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: var(--font-size-base);
+            font-family: var(--font-family-base);
+            line-height: var(--line-height-normal);
+            color: var(--color-text);
+            background-color: var(--color-background);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        /* Layout */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+            padding: var(--space-16);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            height: 48px;
+            width: auto;
+        }
+
+        .progress-bar {
+            background: var(--color-secondary);
+            border-radius: var(--radius-full);
+            height: 8px;
+            width: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: var(--color-primary);
+            height: 100%;
+            border-radius: inherit;
+            transition: width var(--duration-normal) var(--ease-standard);
+            width: 0%;
+        }
+
+        .player-stats {
+            display: flex;
+            gap: var(--space-16);
+            align-items: center;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: var(--space-8);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .xp-badge {
+            background: var(--color-xp);
+            color: white;
+            padding: var(--space-4) var(--space-8);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-bold);
+        }
+
+        .level-badge {
+            background: var(--color-level);
+            color: var(--color-charcoal-700);
+            padding: var(--space-4) var(--space-8);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-bold);
+        }
+
+        .main-content {
+            flex: 1;
+            margin-top: 80px;
+            padding: var(--space-24);
+        }
+
+        /* Screens */
+        .screen {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn var(--duration-normal) var(--ease-standard);
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-card-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            margin-bottom: var(--space-24);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .hero-card {
+            background: linear-gradient(135deg, var(--color-bg-1), var(--color-bg-3));
+            border: 2px solid var(--color-primary);
+            text-align: center;
+            padding: var(--space-32);
+        }
+
+        /* Typography */
+        h1 {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-text);
+            margin-bottom: var(--space-16);
+            line-height: var(--line-height-tight);
+        }
+
+        h2 {
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+            margin-bottom: var(--space-16);
+        }
+
+        h3 {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+            margin-bottom: var(--space-12);
+        }
+
+        p {
+            color: var(--color-text);
+            margin-bottom: var(--space-16);
+            line-height: var(--line-height-normal);
+        }
+
+        .subtitle {
+            color: var(--color-text-secondary);
+            font-size: var(--font-size-lg);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-8);
+            padding: var(--space-12) var(--space-24);
+            border: none;
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--duration-normal) var(--ease-standard);
+            text-decoration: none;
+        }
+
+        .btn:focus-visible {
+            outline: 2px solid var(--color-focus-ring);
+            outline-offset: 2px;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: var(--color-btn-primary-text);
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--color-secondary);
+            color: var(--color-text);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-secondary-hover);
+        }
+
+        .btn-danger {
+            background: var(--color-danger);
+            color: white;
+        }
+
+        .btn-large {
+            padding: var(--space-16) var(--space-32);
+            font-size: var(--font-size-lg);
+            border-radius: var(--radius-md);
+        }
+
+        .btn-block {
+            width: 100%;
+            margin-bottom: var(--space-12);
+        }
+
+        /* Character Selection */
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-20);
+            margin: var(--space-24) 0;
+        }
+
+        .character-card {
+            background: var(--color-surface);
+            border: 2px solid transparent;
+            border-radius: var(--radius-lg);
+            padding: var(--space-20);
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--duration-normal) var(--ease-standard);
+        }
+
+        .character-card:hover {
+            border-color: var(--color-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .character-card.selected {
+            border-color: var(--color-primary);
+            background: var(--color-bg-1);
+        }
+
+        .character-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--radius-full);
+            background: var(--color-primary);
+            margin: 0 auto var(--space-12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-3xl);
+            color: white;
+        }
+
+        /* Activity Components */
+        .activity-container {
+            margin: var(--space-24) 0;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin: var(--space-20) 0;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: var(--radius-lg);
+        }
+
+        .quiz-container {
+            background: var(--color-bg-2);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            margin: var(--space-20) 0;
+        }
+
+        .question {
+            margin-bottom: var(--space-20);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-12);
+        }
+
+        .option {
+            background: var(--color-surface);
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-base);
+            padding: var(--space-12);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--ease-standard);
+        }
+
+        .option:hover {
+            border-color: var(--color-primary);
+        }
+
+        .option.selected {
+            border-color: var(--color-primary);
+            background: var(--color-bg-1);
+        }
+
+        .option.correct {
+            border-color: var(--color-success);
+            background: var(--color-bg-3);
+        }
+
+        .option.incorrect {
+            border-color: var(--color-error);
+            background: var(--color-bg-4);
+        }
+
+        /* Drag &amp; Drop Simulation */
+        .drag-drop-container {
+            background: var(--color-bg-5);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            margin: var(--space-20) 0;
+        }
+
+        .drag-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-12);
+            margin-bottom: var(--space-20);
+        }
+
+        .drag-item {
+            background: var(--color-surface);
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-base);
+            padding: var(--space-8) var(--space-12);
+            cursor: move;
+            user-select: none;
+            transition: all var(--duration-fast) var(--ease-standard);
+        }
+
+        .drag-item:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+
+        .drop-zones {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-16);
+        }
+
+        .drop-zone {
+            background: var(--color-secondary);
+            border: 2px dashed var(--color-border);
+            border-radius: var(--radius-base);
+            min-height: 100px;
+            padding: var(--space-16);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .drop-zone.highlight {
+            border-color: var(--color-primary);
+            background: var(--color-bg-1);
+        }
+
+        /* Interactive Elements */
+        .choice-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-12);
+            margin: var(--space-20) 0;
+        }
+
+        .timeline {
+            position: relative;
+            padding: var(--space-20) 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--color-primary);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: var(--space-24);
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            flex: 1;
+            margin: 0 var(--space-20);
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-16);
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            width: 16px;
+            height: 16px;
+            background: var(--color-primary);
+            border-radius: var(--radius-full);
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        /* Feedback */
+        .feedback {
+            padding: var(--space-16);
+            border-radius: var(--radius-base);
+            margin: var(--space-12) 0;
+        }
+
+        .feedback.success {
+            background: var(--color-bg-3);
+            border: 1px solid var(--color-success);
+            color: var(--color-success);
+        }
+
+        .feedback.error {
+            background: var(--color-bg-4);
+            border: 1px solid var(--color-error);
+            color: var(--color-error);
+        }
+
+        /* Navigation */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: var(--space-32);
+            padding-top: var(--space-20);
+            border-top: 1px solid var(--color-border);
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: var(--space-12);
+            }
+
+            .main-content {
+                margin-top: 120px;
+                padding: var(--space-16);
+            }
+
+            .character-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                flex-direction: row !important;
+                padding-left: var(--space-32);
+            }
+
+            .timeline-marker {
+                left: 20px;
+            }
+
+            .timeline-content {
+                margin-left: var(--space-20);
+                margin-right: 0;
+            }
+        }
+
+        /* Gamification Elements */
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-8);
+            margin: var(--space-16) 0;
+        }
+
+        .badge {
+            background: var(--color-warning);
+            color: var(--color-charcoal-700);
+            padding: var(--space-6) var(--space-12);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-bold);
+            display: flex;
+            align-items: center;
+            gap: var(--space-6);
+        }
+
+        .badge.locked {
+            background: var(--color-secondary);
+            color: var(--color-text-secondary);
+            opacity: 0.6;
+        }
+
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: var(--space-20);
+            background: var(--color-success);
+            color: white;
+            padding: var(--space-12) var(--space-16);
+            border-radius: var(--radius-base);
+            box-shadow: var(--shadow-lg);
+            transform: translateX(100%);
+            transition: transform var(--duration-normal) var(--ease-standard);
+            z-index: 200;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        /* Credits */
+        .credits {
+            background: var(--color-bg-6);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            text-align: center;
+            margin-top: var(--space-32);
+        }
+
+        .credits a {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: var(--font-weight-medium);
+        }
+
+        .credits a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="header-content">
+                <img src="https://user-gen-media-assets.s3.amazonaws.com/seedream_images/0394e881-81e2-4d15-ad67-06cc7b88cef7.png" alt="ChemMatrix RPG Logo" class="logo">
+                <div class="progress-bar" aria-label="Progresso da aventura">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="player-stats">
+                    <div class="stat">
+                        <span class="xp-badge" id="xpDisplay">0 XP</span>
+                    </div>
+                    <div class="stat">
+                        <span class="level-badge" id="levelDisplay">Nível 1</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Screen 1: Welcome -->
+            <div class="screen active" id="screen-welcome">
+                <div class="hero-card">
+                    <h1>🧪 ChemMatrix RPG 🧪</h1>
+                    <p class="subtitle">Uma aventura científica interativa pelo mundo da Química</p>
+                    <p>Bem-vindo(a), jovem cientista! Você está prestes a embarcar em uma jornada épica através das moléculas, átomos e reações que moldam nosso mundo.</p>
+                    <p>Nesta aventura baseada na estrutura Matrix, você investigará <strong>anomalias energéticas globais</strong> que só podem ser compreendidas através do conhecimento sobre <strong>Petróleo, Polímeros e Radioatividade</strong>.</p>
+                    <button class="btn btn-primary btn-large" onclick="startAdventure()" aria-label="Começar a aventura">🚀 Começar Aventura</button>
+                </div>
+                
+                <div class="card">
+                    <h3>🎯 Competências BNCC Desenvolvidas</h3>
+                    <ul>
+                        <li><strong>CG 5:</strong> Compreender, utilizar e criar tecnologias digitais</li>
+                        <li><strong>CG 7:</strong> Argumentar com base em fatos, dados e informações confiáveis</li>
+                        <li><strong>EM13CNT307:</strong> Analisar as propriedades dos materiais para avaliar a adequação</li>
+                        <li><strong>EM13CNT301:</strong> Construir questões, elaborar hipóteses, previsões e estratégias</li>
+                        <li><strong>EM13CNT101:</strong> Analisar e representar transformações e conservações</li>
+                        <li><strong>EM13CNT206:</strong> Discutir a importância da preservação e conservação da biodiversidade</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Screen 2: Character Selection -->
+            <div class="screen" id="screen-character">
+                <div class="card">
+                    <h2>🧬 Ato I - A Pílula Vermelha</h2>
+                    <p>Você acorda em um laboratório futurista. Luzes piscam ao seu redor e você percebe que algo extraordinário está acontecendo. Um cientista misterioso se aproxima...</p>
+                    <p><em>"Escolha sua identidade, jovem explorador. Cada cientista tem habilidades únicas que o ajudarão nesta jornada."</em></p>
+                    
+                    <h3>Escolha seu Avatar Científico:</h3>
+                    <div class="character-grid">
+                        <div class="character-card" onclick="selectCharacter('curie')">
+                            <div class="character-avatar">⚗️</div>
+                            <h4>Marie Curie Jr.</h4>
+                            <p>Especialista em Radioatividade</p>
+                            <p><small>Habilidade: Detecta radiações com precisão +20%</small></p>
+                        </div>
+                        <div class="character-card" onclick="selectCharacter('carothers')">
+                            <div class="character-avatar">🧪</div>
+                            <h4>Wallace Carothers Jr.</h4>
+                            <p>Mestre dos Polímeros</p>
+                            <p><small>Habilidade: Compreende estruturas moleculares +20%</small></p>
+                        </div>
+                        <div class="character-card" onclick="selectCharacter('petroleum')">
+                            <div class="character-avatar">🛢️</div>
+                            <h4>Petro Explorer</h4>
+                            <p>Especialista em Petróleo</p>
+                            <p><small>Habilidade: Identifica compostos orgânicos +20%</small></p>
+                        </div>
+                        <div class="character-card" onclick="selectCharacter('matrix')">
+                            <div class="character-avatar">🤖</div>
+                            <h4>Neo Científico</h4>
+                            <p>Hacker Químico</p>
+                            <p><small>Habilidade: Quebra códigos moleculares +20%</small></p>
+                        </div>
+                    </div>
+                    
+                    <div class="navigation">
+                        <button class="btn btn-secondary" onclick="goToScreen('welcome')" aria-label="Voltar para tela inicial">← Voltar</button>
+                        <button class="btn btn-primary" onclick="startMission()" id="startMissionBtn" disabled aria-label="Iniciar missão">Iniciar Missão →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 3: Act II - Petroleum Training -->
+            <div class="screen" id="screen-petroleum">
+                <div class="card">
+                    <h2>🛢️ Ato II - Treinamento em Nabucodonosor</h2>
+                    <h3>Laboratório de Petróleo &amp; Destilação</h3>
+                    <p>Você foi transportado para o centro de treinamento da nave Nabucodonosor. Aqui, você aprenderá sobre os <strong>fundamentos do petróleo</strong> antes de enfrentar os desafios da Matrix.</p>
+                    
+                    <div class="activity-container">
+                        <h4>📺 Vídeo Educativo - Destilação Fracionada</h4>
+                        <p>Assista ao Prof. Paulo Valim explicar o processo industrial da destilação fracionada do petróleo:</p>
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/Kcs2jK1tk78" title="Destilação Fracionada do Petróleo" allowfullscreen></iframe>
+                        </div>
+                        <button class="btn btn-primary" onclick="completeVideo('petroleum')" id="petroleumVideoBtn">✅ Vídeo Assistido</button>
+                    </div>
+
+                    <div class="drag-drop-container">
+                        <h4>🎯 Atividade H5P: Drag &amp; Drop - Produtos do Petróleo</h4>
+                        <p>Arraste cada produto para sua respectiva temperatura de ebulição:</p>
+                        
+                        <div class="drag-items" id="petroleumItems">
+                            <div class="drag-item" draggable="true" data-product="gasolina">Gasolina</div>
+                            <div class="drag-item" draggable="true" data-product="querosene">Querosene</div>
+                            <div class="drag-item" draggable="true" data-product="diesel">Diesel</div>
+                            <div class="drag-item" draggable="true" data-product="asfalto">Asfalto</div>
+                        </div>
+                        
+                        <div class="drop-zones">
+                            <div class="drop-zone" data-temp="30-200">30-200°C</div>
+                            <div class="drop-zone" data-temp="150-300">150-300°C</div>
+                            <div class="drop-zone" data-temp="200-350">200-350°C</div>
+                            <div class="drop-zone" data-temp="350+">Acima de 350°C</div>
+                        </div>
+                        
+                        <div id="petroleumFeedback" class="feedback" style="display: none;"></div>
+                        <button class="btn btn-primary" onclick="checkPetroleumDragDrop()" id="checkPetroleumBtn" style="display: none;">Verificar Respostas</button>
+                    </div>
+                    
+                    <div class="navigation">
+                        <button class="btn btn-secondary" onclick="goToScreen('character')" aria-label="Voltar para seleção de personagem">← Voltar</button>
+                        <button class="btn btn-primary" onclick="goToScreen('polymers')" id="toPolymersBtn" disabled aria-label="Ir para polímeros">Próximo: Polímeros →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 4: Polymers Training -->
+            <div class="screen" id="screen-polymers">
+                <div class="card">
+                    <h2>🧪 Laboratório de Polímeros</h2>
+                    <p>Agora você precisa dominar o conhecimento sobre <strong>polímeros</strong>. Estas macromoléculas são essenciais para compreender os materiais do futuro!</p>
+                    
+                    <div class="activity-container">
+                        <h4>📺 Vídeo Educativo - Polímeros de Adição e Condensação</h4>
+                        <p>Descomplica o mundo dos polímeros com este vídeo animado:</p>
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/J_f62aYyLgE" title="Polímeros de Adição e Condensação" allowfullscreen></iframe>
+                        </div>
+                        <button class="btn btn-primary" onclick="completeVideo('polymers')" id="polymersVideoBtn">✅ Vídeo Assistido</button>
+                    </div>
+
+                    <div class="quiz-container">
+                        <h4>🎯 Interactive Book Simulation - Tipos de Polimerização</h4>
+                        <div class="question">
+                            <h5>Questão 1: Qual é a principal característica dos homopolímeros?</h5>
+                            <div class="options" id="polymerQ1">
+                                <div class="option" onclick="selectOption(this, false)">São formados por diferentes tipos de monômeros</div>
+                                <div class="option" onclick="selectOption(this, true)">São formados por um único tipo de monômero</div>
+                                <div class="option" onclick="selectOption(this, false)">Sempre eliminam moléculas pequenas na formação</div>
+                                <div class="option" onclick="selectOption(this, false)">Não podem formar cadeias longas</div>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <h5>Questão 2: Qual processo caracteriza a polimerização por condensação?</h5>
+                            <div class="options" id="polymerQ2">
+                                <div class="option" onclick="selectOption(this, false)">Apenas adição de monômeros</div>
+                                <div class="option" onclick="selectOption(this, true)">Eliminação de moléculas pequenas (H₂O, HCl)</div>
+                                <div class="option" onclick="selectOption(this, false)">Quebra de ligações duplas</div>
+                                <div class="option" onclick="selectOption(this, false)">Formação apenas de homopolímeros</div>
+                            </div>
+                        </div>
+                        
+                        <div id="polymerFeedback" class="feedback" style="display: none;"></div>
+                    </div>
+                    
+                    <div class="choice-buttons">
+                        <h4>🎮 Branching Scenario - Aplicacao Industrial</h4>
+                        <p>Voce esta em uma fabrica e precisa escolher o polimero adequado para cada aplicacao:</p>
+                        <button class="btn btn-secondary btn-block" onclick="makeChoice('plastic-bags')">🛍️ Sacolas plasticas - Polietileno</button>
+                        <button class="btn btn-secondary btn-block" onclick="makeChoice('bottles')">🍶 Garrafas - PET</button>
+                        <button class="btn btn-secondary btn-block" onclick="makeChoice('pipes')">🚰 Tubulacoes - PVC</button>
+                        <div id="choiceFeedback" class="feedback" style="display: none;"></div>
+                    </div>
+                    
+                    <div class="navigation">
+                        <button class="btn btn-secondary" onclick="goToScreen('petroleum')" aria-label="Voltar para petróleo">← Voltar</button>
+                        <button class="btn btn-primary" onclick="goToScreen('radioactivity')" id="toRadioactivityBtn" disabled aria-label="Ir para radioatividade">Próximo: Radioatividade →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 5: Act III - Radioactivity Mission -->
+            <div class="screen" id="screen-radioactivity">
+                <div class="card">
+                    <h2>☢️ Ato III - Missões na Matrix</h2>
+                    <h3>Centro de Controle Nuclear</h3>
+                    <p>Você foi enviado para investigar anomalias radioativas na Matrix. O conhecimento sobre <strong>radioatividade</strong> será crucial para sua sobrevivência!</p>
+                    
+                    <div class="activity-container">
+                        <h4>📺 Vídeo Introdutório - O que é Radiação?</h4>
+                        <p>Entenda os fundamentos da radiação com este vídeo do Pontociência:</p>
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/ysykej_3a3o" title="O que é a radiação?" allowfullscreen></iframe>
+                        </div>
+                        <button class="btn btn-primary" onclick="completeVideo('radiation')" id="radiationVideoBtn">✅ Vídeo Assistido</button>
+                    </div>
+
+                    <div class="drag-drop-container">
+                        <h4>🎯 Interactive Structure - Tipos de Radiação</h4>
+                        <p>Organize os tipos de radiação por seu poder de penetração (do menor para o maior):</p>
+                        
+                        <div class="drag-items" id="radiationItems">
+                            <div class="drag-item" draggable="true" data-type="alpha">Radiação Alfa (α) - 2p + 2n</div>
+                            <div class="drag-item" draggable="true" data-type="beta">Radiação Beta (β) - elétrons</div>
+                            <div class="drag-item" draggable="true" data-type="gamma">Radiação Gama (γ) - eletromagnética</div>
+                        </div>
+                        
+                        <div class="drop-zones">
+                            <div class="drop-zone" data-penetration="low">Menor Penetração<br><small>Barrada por papel</small></div>
+                            <div class="drop-zone" data-penetration="medium">Penetração Média<br><small>Barrada por alumínio</small></div>
+                            <div class="drop-zone" data-penetration="high">Maior Penetração<br><small>Barrada por chumbo grosso</small></div>
+                        </div>
+                        
+                        <div id="radiationFeedback" class="feedback" style="display: none;"></div>
+                        <button class="btn btn-primary" onclick="checkRadiationDragDrop()" id="checkRadiationBtn" style="display: none;">Verificar Respostas</button>
+                    </div>
+
+                    <div class="activity-container">
+                        <h4>📺 Vídeo Educativo - Meia-vida</h4>
+                        <p>Compreenda o conceito de meia-vida radioativa:</p>
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/iA41-d5l1pE" title="Meia-vida" allowfullscreen></iframe>
+                        </div>
+                        <button class="btn btn-primary" onclick="completeVideo('halflife')" id="halflifeVideoBtn">✅ Vídeo Assistido</button>
+                    </div>
+
+                    <div class="quiz-container">
+                        <h4>🔢 Arithmetic Quiz - Cálculos de Meia-vida</h4>
+                        <div class="question">
+                            <h5>Se um elemento radioativo tem meia-vida de 10 anos e você começou com 100g, quanto restará após 30 anos?</h5>
+                            <div class="options" id="halflifeQ">
+                                <div class="option" onclick="selectOption(this, false)">25g</div>
+                                <div class="option" onclick="selectOption(this, true)">12,5g</div>
+                                <div class="option" onclick="selectOption(this, false)">6,25g</div>
+                                <div class="option" onclick="selectOption(this, false)">3,125g</div>
+                            </div>
+                            <div class="feedback" style="display: none;">💡 <strong>Explicação:</strong> Em 30 anos (3 meias-vidas): 100g → 50g → 25g → 12,5g</div>
+                        </div>
+                    </div>
+                    
+                    <div class="navigation">
+                        <button class="btn btn-secondary" onclick="goToScreen('polymers')" aria-label="Voltar para polímeros">← Voltar</button>
+                        <button class="btn btn-primary" onclick="goToScreen('nuclear')" id="toNuclearBtn" disabled aria-label="Ir para reações nucleares">Próximo: Reações Nucleares →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 6: Nuclear Reactions -->
+            <div class="screen" id="screen-nuclear">
+                <div class="card">
+                    <h2>⚛️ Reações Nucleares - Fusão e Fissão</h2>
+                    <p>O conhecimento final necessário para sua missão: compreender as <strong>reações nucleares</strong> que alimentam tanto o Sol quanto as usinas nucleares.</p>
+                    
+                    <div class="activity-container">
+                        <h4>📺 Vídeo Educativo - Fissão e Fusão Nuclear</h4>
+                        <p>Aprenda sobre os dois principais tipos de reações nucleares:</p>
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/vcZDFAP2Y2s" title="Fissão e Fusão Nuclear" allowfullscreen></iframe>
+                        </div>
+                        <button class="btn btn-primary" onclick="completeVideo('nuclear')" id="nuclearVideoBtn">✅ Vídeo Assistido</button>
+                    </div>
+
+                    <div class="quiz-container">
+                        <h4>🎯 Dialog Cards Simulation - Decisões de Segurança Nuclear</h4>
+                        <div class="question">
+                            <h5>⚠️ ALERTA: Detectada anomalia no reator! Qual sua decisão?</h5>
+                            <div class="choice-buttons">
+                                <button class="btn btn-danger btn-block" onclick="nuclearChoice('emergency', 'Correto! Em emergências nucleares, segurança é prioridade absoluta.')">🚨 Ativar protocolo de emergência</button>
+                                <button class="btn btn-secondary btn-block" onclick="nuclearChoice('monitor', 'Arriscado! Monitorar pode ser insuficiente em situações críticas.')">📊 Apenas monitorar os níveis</button>
+                                <button class="btn btn-secondary btn-block" onclick="nuclearChoice('increase', 'PERIGOSO! Nunca aumente potência durante anomalias!')">⚡ Aumentar potência para normalizar</button>
+                            </div>
+                            <div id="nuclearChoiceFeedback" class="feedback" style="display: none;"></div>
+                        </div>
+                        
+                        <div class="question">
+                            <h5>Qual processo libera mais energia por nucleon?</h5>
+                            <div class="options" id="nuclearQ">
+                                <div class="option" onclick="selectOption(this, false)">Fissão de Urânio-235</div>
+                                <div class="option" onclick="selectOption(this, true)">Fusão de Hidrogênio em Hélio</div>
+                                <div class="option" onclick="selectOption(this, false)">Decaimento radioativo</div>
+                                <div class="option" onclick="selectOption(this, false)">Todas liberam a mesma energia</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="navigation">
+                        <button class="btn btn-secondary" onclick="goToScreen('radioactivity')" aria-label="Voltar para radioatividade">← Voltar</button>
+                        <button class="btn btn-primary" onclick="goToScreen('final-battle')" id="toFinalBtn" disabled aria-label="Ir para batalha final">Batalha Final →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 7: Act IV - Final Battle -->
+            <div class="screen" id="screen-final-battle">
+                <div class="card">
+                    <h2>⚔️ Ato IV - A Batalha Final</h2>
+                    <h3>Centro de Controle Global</h3>
+                    <p>Chegou o momento decisivo! Você descobriu que as anomalias energéticas são causadas por um vírus químico que está corrompendo as estruturas moleculares do planeta.</p>
+                    <p>Use todo seu conhecimento para tomar as decisões certas e salvar o mundo!</p>
+                    
+                    <div class="quiz-container">
+                        <h4>🎮 Course Presentation - Desafio Integrativo</h4>
+                        
+                        <div class="question">
+                            <h5>🛢️ SITUAÇÃO 1: O vírus está atacando uma refinaria de petróleo. Qual produto você prioriza proteger?</h5>
+                            <div class="choice-buttons">
+                                <button class="btn btn-secondary btn-block" onclick="finalChoice('gasoline', 20, 'Boa escolha! Gasolina é essencial para transporte de emergência.')">⛽ Gasolina (30-200°C)</button>
+                                <button class="btn btn-secondary btn-block" onclick="finalChoice('diesel', 30, 'Excelente! Diesel é crucial para geradores e veículos pesados.')">🚛 Diesel (200-350°C)</button>
+                                <button class="btn btn-secondary btn-block" onclick="finalChoice('asphalt', 10, 'Útil para infraestrutura, mas não prioridade em emergência.')">🛣️ Asfalto (>350°C)</button>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <h5>🧪 SITUAÇÃO 2: Você precisa criar um polímero resistente ao vírus. Qual escolhe?</h5>
+                            <div class="choice-buttons">
+                                <button class="btn btn-secondary btn-block" onclick="finalChoice('pet', 25, 'Ótimo! PET por condensação é resistente quimicamente.')">🍶 PET (polímero de condensação)</button>
+                                <button class="btn btn-secondary btn-block" onclick="finalChoice('polyethylene', 20, 'Bom! Polietileno é versátil mas menos resistente quimicamente.')">🛍️ Polietileno (polímero de adição)</button>
+                                <button class="btn btn-secondary btn-block" onclick="finalChoice('copolymer', 35, 'EXCELENTE! Copolímeros combinam propriedades de diferentes monômeros!')">⭐ Copolímero especial</button>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <h5>☢️ SITUAÇÃO 3: O vírus emite radiação. Qual proteção você usa?</h5>
+                            <div class="choice-buttons">
+                                <button class="btn btn-secondary btn-block" onclick="finalChoice('paper', 5, 'Insuficiente! Papel só protege contra radiação alfa.')">📄 Barreira de papel</button>
+                                <button class="btn btn-secondary btn-block" onclick="finalChoice('aluminum', 15, 'Parcial! Alumínio protege contra alfa e beta.')">⚡ Barreira de alumínio</button>
+                                <button class="btn btn-secondary btn-block" onclick="finalChoice('lead', 40, 'PERFEITO! Chumbo protege contra todos os tipos de radiação!')">🛡️ Barreira de chumbo</button>
+                            </div>
+                        </div>
+                        
+                        <div id="finalScore" class="feedback" style="display: none;"></div>
+                    </div>
+                    
+                    <div class="navigation">
+                        <button class="btn btn-secondary" onclick="goToScreen('nuclear')" aria-label="Voltar para reações nucleares">← Voltar</button>
+                        <button class="btn btn-primary" onclick="showEnding()" id="showEndingBtn" disabled aria-label="Ver final da história">Ver Final →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 8: Epilogue -->
+            <div class="screen" id="screen-epilogue">
+                <div class="card">
+                    <h2>🏆 Epílogo - O Retorno a Zion</h2>
+                    <div id="endingContent"></div>
+                    
+                    <div class="activity-container">
+                        <h4>🤔 Momento de Metacognição</h4>
+                        <div class="quiz-container">
+                            <h5>Reflita sobre sua jornada:</h5>
+                            <div class="question">
+                                <label for="learned">O que você aprendeu de mais importante sobre Química hoje?</label>
+                                <textarea id="learned" class="form-control" rows="3" placeholder="Descreva suas principais descobertas..."></textarea>
+                            </div>
+                            <div class="question">
+                                <label for="difficult">Qual foi o conceito mais desafiador?</label>
+                                <textarea id="difficult" class="form-control" rows="3" placeholder="Que dificuldades você enfrentou?"></textarea>
+                            </div>
+                            <div class="question">
+                                <label for="strategies">Que estratégias você usaria para superar essas dificuldades?</label>
+                                <textarea id="strategies" class="form-control" rows="3" placeholder="Como você pode melhorar seu aprendizado?"></textarea>
+                            </div>
+                            <button class="btn btn-primary" onclick="saveReflection()">💾 Salvar Reflexão</button>
+                        </div>
+                    </div>
+
+                    <div class="timeline">
+                        <h4>📚 Timeline das Descobertas Científicas</h4>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h5>1859 - Primeira Perfuração de Petróleo</h5>
+                                <p>Edwin Drake perfura o primeiro poço de petróleo comercial na Pensilvânia, iniciando a era do petróleo.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h5>1896 - Descoberta da Radioatividade</h5>
+                                <p>Henri Becquerel descobre a radioatividade natural, abrindo caminho para Marie Curie.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h5>1930s - Era dos Polímeros</h5>
+                                <p>Wallace Carothers desenvolve o nylon, revolucionando a indústria de materiais sintéticos.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <h5>1942 - Primeira Reação Nuclear Controlada</h5>
+                                <p>Enrico Fermi achieve a primeira reação nuclear controlada em Chicago.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="badge-container">
+                        <h4>🏅 Suas Conquistas</h4>
+                        <div id="finalBadges"></div>
+                    </div>
+                    
+                    <div class="choice-buttons">
+                        <button class="btn btn-primary btn-block" onclick="restartAdventure()">🔄 Jogar Novamente</button>
+                        <button class="btn btn-secondary btn-block" onclick="exportResults()">📊 Exportar Resultados</button>
+                    </div>
+                </div>
+                
+                <!-- Credits -->
+                <div class="credits">
+                    <h3>👩‍🔬 Créditos</h3>
+                    <p><strong>Prof.ª Pâmella A. Balcaçar</strong></p>
+                    <p><a href="http://lattes.cnpq.br/1206643836491711" target="_blank" rel="noopener noreferrer" aria-label="Acessar currículo Lattes da professora Pâmella">📋 Currículo Lattes</a> | <a href="https://twitter.com/pamellabiotec" target="_blank" rel="noopener noreferrer" aria-label="Seguir @pamellabiotec no Twitter">🐦 @pamellabiotec</a></p>
+                    <p>🄯 Licença <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer" aria-label="Informações sobre licença Creative Commons">CC BY-NC-SA 4.0</a></p>
+                    <p><small>Produto educacional desenvolvido para formação científica de estudantes do 3º ano do Ensino Médio, alinhado às competências da BNCC.</small></p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Notification System -->
+        <div class="notification" id="notification"></div>
+    </div>
+
+    <script>
+        // Game State
+        let gameState = {
+            currentScreen: 'welcome',
+            character: null,
+            xp: 0,
+            level: 1,
+            progress: 0,
+            completedActivities: {
+                petroleumVideo: false,
+                petroleumDragDrop: false,
+                polymersVideo: false,
+                polymersQuiz: false,
+                polymersChoice: false,
+                radiationVideo: false,
+                radiationDragDrop: false,
+                halflifeVideo: false,
+                halflifeQuiz: false,
+                nuclearVideo: false,
+                nuclearQuiz: false,
+                finalBattle: false
+            },
+            badges: [],
+            finalScore: 0,
+            answers: {
+                petroleum: {},
+                polymers: {},
+                radiation: {},
+                nuclear: {},
+                final: {}
+            }
+        };
+
+        // Drag and Drop State
+        let dragDropState = {
+            petroleum: {
+                correct: {
+                    'gasolina': '30-200',
+                    'querosene': '150-300', 
+                    'diesel': '200-350',
+                    'asfalto': '350+'
+                },
+                userAnswers: {}
+            },
+            radiation: {
+                correct: {
+                    'alpha': 'low',
+                    'beta': 'medium',
+                    'gamma': 'high'
+                },
+                userAnswers: {}
+            }
+        };
+
+        // Utility Functions
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification show ${type}`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function addXP(amount) {
+            gameState.xp += amount;
+            const newLevel = Math.floor(gameState.xp / 100) + 1;
+            
+            if (newLevel > gameState.level) {
+                gameState.level = newLevel;
+                showNotification(`🎉 Level Up! Você atingiu o nível ${newLevel}!`);
+            }
+            
+            updateUI();
+        }
+
+        function updateProgress() {
+            const totalActivities = Object.keys(gameState.completedActivities).length;
+            const completedCount = Object.values(gameState.completedActivities).filter(Boolean).length;
+            gameState.progress = Math.round((completedCount / totalActivities) * 100);
+            updateUI();
+        }
+
+        function updateUI() {
+            document.getElementById('xpDisplay').textContent = `${gameState.xp} XP`;
+            document.getElementById('levelDisplay').textContent = `Nível ${gameState.level}`;
+            document.getElementById('progressFill').style.width = `${gameState.progress}%`;
+        }
+
+        function awardBadge(badgeId, badgeName, description) {
+            if (!gameState.badges.includes(badgeId)) {
+                gameState.badges.push(badgeId);
+                showNotification(`🏅 Nova conquista: ${badgeName}!`);
+            }
+        }
+
+        // Screen Navigation
+        function goToScreen(screenId) {
+            // Hide current screen
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show target screen
+            document.getElementById(`screen-${screenId}`).classList.add('active');
+            gameState.currentScreen = screenId;
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Adventure Flow
+        function startAdventure() {
+            goToScreen('character');
+            addXP(10);
+        }
+
+        function selectCharacter(characterId) {
+            // Remove previous selections
+            document.querySelectorAll('.character-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Mark selected character
+            event.target.closest('.character-card').classList.add('selected');
+            gameState.character = characterId;
+            
+            // Enable start mission button
+            document.getElementById('startMissionBtn').disabled = false;
+            
+            addXP(15);
+        }
+
+        function startMission() {
+            if (!gameState.character) {
+                showNotification('Selecione um personagem primeiro!', 'error');
+                return;
+            }
+            
+            goToScreen('petroleum');
+            awardBadge('explorer', 'Explorador Químico', 'Iniciou a jornada científica');
+            
+            // Setup drag and drop for petroleum
+            setupPetroleumDragDrop();
+        }
+
+        // Video Completion
+        function completeVideo(videoType) {
+            gameState.completedActivities[`${videoType}Video`] = true;
+            addXP(25);
+            updateProgress();
+            
+            // Enable next activities
+            switch(videoType) {
+                case 'petroleum':
+                    showNotification('🎬 Vídeo sobre petróleo concluído!');
+                    break;
+                case 'polymers':
+                    showNotification('🎬 Vídeo sobre polímeros concluído!');
+                    break;
+                case 'radiation':
+                    showNotification('🎬 Vídeo sobre radiação concluído!');
+                    break;
+                case 'halflife':
+                    showNotification('🎬 Vídeo sobre meia-vida concluído!');
+                    break;
+                case 'nuclear':
+                    showNotification('🎬 Vídeo sobre reações nucleares concluído!');
+                    break;
+            }
+        }
+
+        // Petroleum Drag & Drop
+        function setupPetroleumDragDrop() {
+            const items = document.querySelectorAll('#petroleumItems .drag-item');
+            const zones = document.querySelectorAll('#screen-petroleum .drop-zone');
+            
+            items.forEach(item => {
+                item.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', e.target.dataset.product);
+                });
+            });
+            
+            zones.forEach(zone => {
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('highlight');
+                });
+                
+                zone.addEventListener('dragleave', () => {
+                    zone.classList.remove('highlight');
+                });
+                
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('highlight');
+                    
+                    const product = e.dataTransfer.getData('text/plain');
+                    const temp = zone.dataset.temp;
+                    
+                    // Remove item from original location
+                    const draggedItem = document.querySelector(`[data-product="${product}"]`);
+                    
+                    // Add to drop zone
+                    zone.innerHTML = `<strong>${draggedItem.textContent}</strong><br><small>${temp}</small>`;
+                    draggedItem.style.display = 'none';
+                    
+                    // Store answer
+                    dragDropState.petroleum.userAnswers[product] = temp;
+                    
+                    // Check if all items are placed
+                    if (Object.keys(dragDropState.petroleum.userAnswers).length === 4) {
+                        document.getElementById('checkPetroleumBtn').style.display = 'block';
+                    }
+                });
+            });
+        }
+
+        function checkPetroleumDragDrop() {
+            const correct = dragDropState.petroleum.correct;
+            const userAnswers = dragDropState.petroleum.userAnswers;
+            let score = 0;
+            
+            for (let product in correct) {
+                if (userAnswers[product] === correct[product]) {
+                    score += 25;
+                }
+            }
+            
+            const feedback = document.getElementById('petroleumFeedback');
+            feedback.style.display = 'block';
+            
+            if (score === 100) {
+                feedback.className = 'feedback success';
+                feedback.textContent = '🎉 Perfeito! Você dominou a destilação fracionada do petróleo!';
+                awardBadge('petroleum', 'Mestre do Petróleo', 'Dominou a destilação fracionada');
+                addXP(50);
+            } else if (score >= 75) {
+                feedback.className = 'feedback success';
+                feedback.textContent = '👏 Muito bem! Você entende bem o processo de destilação.';
+                addXP(35);
+            } else {
+                feedback.className = 'feedback error';
+                feedback.textContent = '🤔 Que tal revisar o vídeo? Lembre-se: temperatura de ebulição determina a separação!';
+                addXP(15);
+            }
+            
+            gameState.completedActivities.petroleumDragDrop = true;
+            document.getElementById('toPolymersBtn').disabled = false;
+            updateProgress();
+        }
+
+        // Polymers Quiz
+        function selectOption(element, isCorrect) {
+            // Clear previous selections in this question
+            const parent = element.parentElement;
+            parent.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            // Mark selected option
+            element.classList.add('selected');
+            
+            // Show feedback after a delay
+            setTimeout(() => {
+                element.classList.add(isCorrect ? 'correct' : 'incorrect');
+                
+                if (isCorrect) {
+                    addXP(20);
+                }
+                
+                // Check if all polymer questions are answered
+                checkPolymersCompletion();
+            }, 500);
+        }
+
+        function checkPolymersCompletion() {
+            const correctAnswers = document.querySelectorAll('#screen-polymers .option.correct').length;
+            
+            if (correctAnswers >= 2) {
+                gameState.completedActivities.polymersQuiz = true;
+                updateProgress();
+                
+                const feedback = document.getElementById('polymerFeedback');
+                feedback.style.display = 'block';
+                feedback.className = 'feedback success';
+                feedback.textContent = '🧪 Excelente! Você compreende bem os tipos de polímeros!';
+                
+                awardBadge('polymers', 'Mestre dos Polímeros', 'Dominou a polimerização');
+            }
+        }
+
+        // Choice System
+        function makeChoice(choiceId) {
+            const feedbackElement = document.getElementById('choiceFeedback');
+            feedbackElement.style.display = 'block';
+            feedbackElement.className = 'feedback success';
+            
+            let feedback = '';
+            switch(choiceId) {
+                case 'plastic-bags':
+                    feedback = 'Correto! Polietileno e ideal para sacolas plasticas por sua flexibilidade e resistencia.';
+                    break;
+                case 'bottles':
+                    feedback = 'Correto! PET e amplamente usado em garrafas por ser transparente e resistente.';
+                    break;
+                case 'pipes':
+                    feedback = 'Correto! PVC e ideal para tubulacoes por sua resistencia quimica e durabilidade.';
+                    break;
+            }
+            
+            feedbackElement.textContent = feedback;
+            
+            gameState.completedActivities.polymersChoice = true;
+            document.getElementById('toRadioactivityBtn').disabled = false;
+            addXP(30);
+            updateProgress();
+        }
+
+        // Radiation Drag & Drop
+        function setupRadiationDragDrop() {
+            const items = document.querySelectorAll('#radiationItems .drag-item');
+            const zones = document.querySelectorAll('#screen-radioactivity .drop-zone');
+            
+            items.forEach(item => {
+                item.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', e.target.dataset.type);
+                });
+            });
+            
+            zones.forEach(zone => {
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('highlight');
+                });
+                
+                zone.addEventListener('dragleave', () => {
+                    zone.classList.remove('highlight');
+                });
+                
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('highlight');
+                    
+                    const radiationType = e.dataTransfer.getData('text/plain');
+                    const penetration = zone.dataset.penetration;
+                    
+                    // Remove item from original location
+                    const draggedItem = document.querySelector(`[data-type="${radiationType}"]`);
+                    
+                    // Add to drop zone
+                    const originalContent = zone.innerHTML;
+                    zone.innerHTML = originalContent + `<br><strong>${draggedItem.textContent}</strong>`;
+                    draggedItem.style.display = 'none';
+                    
+                    // Store answer
+                    dragDropState.radiation.userAnswers[radiationType] = penetration;
+                    
+                    // Check if all items are placed
+                    if (Object.keys(dragDropState.radiation.userAnswers).length === 3) {
+                        document.getElementById('checkRadiationBtn').style.display = 'block';
+                    }
+                });
+            });
+        }
+
+        function checkRadiationDragDrop() {
+            const correct = dragDropState.radiation.correct;
+            const userAnswers = dragDropState.radiation.userAnswers;
+            let score = 0;
+            
+            for (let type in correct) {
+                if (userAnswers[type] === correct[type]) {
+                    score += 33;
+                }
+            }
+            
+            const feedback = document.getElementById('radiationFeedback');
+            feedback.style.display = 'block';
+            
+            if (score >= 99) {
+                feedback.className = 'feedback success';
+                feedback.textContent = '☢️ Perfeito! Você dominou os tipos de radiação e seus poderes de penetração!';
+                awardBadge('radiation', 'Guardião Nuclear', 'Dominou a radioatividade');
+                addXP(50);
+            } else {
+                feedback.className = 'feedback error';
+                feedback.textContent = '🤔 Lembre-se: Alfa < Beta < Gama em poder de penetração!';
+                addXP(25);
+            }
+            
+            gameState.completedActivities.radiationDragDrop = true;
+            document.getElementById('toNuclearBtn').disabled = false;
+            updateProgress();
+        }
+
+        // Nuclear Decisions
+        function nuclearChoice(choiceId, feedback) {
+            const feedbackElement = document.getElementById('nuclearChoiceFeedback');
+            feedbackElement.style.display = 'block';
+            
+            if (choiceId === 'emergency') {
+                feedbackElement.className = 'feedback success';
+                addXP(40);
+            } else {
+                feedbackElement.className = 'feedback error';
+                addXP(10);
+            }
+            
+            feedbackElement.textContent = feedback;
+            
+            gameState.completedActivities.nuclearQuiz = true;
+            document.getElementById('toFinalBtn').disabled = false;
+            updateProgress();
+        }
+
+        // Final Battle
+        function finalChoice(choiceId, points, feedback) {
+            gameState.finalScore += points;
+            
+            // Disable used button and show feedback
+            event.target.disabled = true;
+            event.target.style.opacity = '0.6';
+            
+            showNotification(`+${points} pontos: ${feedback}`);
+            addXP(points);
+            
+            // Check if all choices made (3 situations)
+            const disabledButtons = document.querySelectorAll('#screen-final-battle .btn:disabled').length;
+            if (disabledButtons >= 3) {
+                gameState.completedActivities.finalBattle = true;
+                updateProgress();
+                
+                const scoreElement = document.getElementById('finalScore');
+                scoreElement.style.display = 'block';
+                
+                if (gameState.finalScore >= 80) {
+                    scoreElement.className = 'feedback success';
+                    scoreElement.textContent = `🏆 EXCELENTE! Pontuação final: ${gameState.finalScore}/100. Você salvou o mundo!`;
+                    awardBadge('hero', 'Herói Científico', 'Salvou o mundo com conhecimento químico');
+                } else if (gameState.finalScore >= 60) {
+                    scoreElement.className = 'feedback success';
+                    scoreElement.textContent = `👏 BOM TRABALHO! Pontuação final: ${gameState.finalScore}/100. Missão cumprida!`;
+                } else {
+                    scoreElement.className = 'feedback error';
+                    scoreElement.textContent = `🤔 Pontuação final: ${gameState.finalScore}/100. Que tal revisar os conceitos?`;
+                }
+                
+                document.getElementById('showEndingBtn').disabled = false;
+            }
+        }
+
+        // Ending System
+        function showEnding() {
+            goToScreen('epilogue');
+            
+            const endingContent = document.getElementById('endingContent');
+            let ending = '';
+            
+            if (gameState.finalScore >= 90) {
+                ending = `
+                    <div class="hero-card">
+                        <h3>🏆 FINAL ÉPICO: O Mestre da Matrix</h3>
+                        <p>Parabéns! Você não apenas salvou o mundo, mas se tornou um verdadeiro Mestre da Matrix Química. Seu conhecimento sobre petróleo, polímeros e radioatividade foi perfeito!</p>
+                        <p><strong>Pontuação Final: ${gameState.finalScore}/100</strong></p>
+                        <p>🌟 Você desbloqueou todos os segredos da química e se tornou uma lenda entre os cientistas!</p>
+                    </div>
+                `;
+            } else if (gameState.finalScore >= 70) {
+                ending = `
+                    <div class="card" style="background: var(--color-bg-3);">
+                        <h3>🎖️ FINAL HEROICO: O Salvador Científico</h3>
+                        <p>Excelente trabalho! Você conseguiu derrotar o vírus químico e salvar o planeta. Seu conhecimento sólido em química foi fundamental para o sucesso da missão.</p>
+                        <p><strong>Pontuação Final: ${gameState.finalScore}/100</strong></p>
+                        <p>✨ Continue estudando para se tornar um mestre completo!</p>
+                    </div>
+                `;
+            } else if (gameState.finalScore >= 50) {
+                ending = `
+                    <div class="card" style="background: var(--color-bg-2);">
+                        <h3>⚔️ FINAL CORAJOSO: O Aprendiz Determinado</h3>
+                        <p>Você mostrou coragem e determinação! Embora tenha enfrentado dificuldades, conseguiu contribuir para a missão e aprendeu muito no processo.</p>
+                        <p><strong>Pontuação Final: ${gameState.finalScore}/100</strong></p>
+                        <p>📚 Continue praticando - você tem potencial para muito mais!</p>
+                    </div>
+                `;
+            } else {
+                ending = `
+                    <div class="card" style="background: var(--color-bg-4);">
+                        <h3>🎓 FINAL EDUCATIVO: O Estudante Persistente</h3>
+                        <p>Toda jornada de aprendizado tem seus desafios! Você demonstrou persistência e coragem para chegar até aqui. O importante é continuar aprendendo.</p>
+                        <p><strong>Pontuação Final: ${gameState.finalScore}/100</strong></p>
+                        <p>💪 Revisite os conceitos e tente novamente - você vai conseguir!</p>
+                    </div>
+                `;
+            }
+            
+            endingContent.innerHTML = ending;
+            
+            // Show final badges
+            showFinalBadges();
+        }
+
+        function showFinalBadges() {
+            const badgeContainer = document.getElementById('finalBadges');
+            const allBadges = {
+                explorer: { name: '🚀 Explorador Químico', desc: 'Iniciou a jornada científica' },
+                petroleum: { name: '🛢️ Mestre do Petróleo', desc: 'Dominou a destilação fracionada' },
+                polymers: { name: '🧪 Mestre dos Polímeros', desc: 'Compreendeu a polimerização' },
+                radiation: { name: '☢️ Guardião Nuclear', desc: 'Dominou a radioatividade' },
+                hero: { name: '🏆 Herói Científico', desc: 'Salvou o mundo com química' }
+            };
+            
+            let badgeHTML = '';
+            
+            for (let badgeId in allBadges) {
+                const badge = allBadges[badgeId];
+                const earned = gameState.badges.includes(badgeId);
+                
+                badgeHTML += `
+                    <div class="badge ${earned ? '' : 'locked'}">
+                        ${badge.name}
+                        <br><small>${badge.desc}</small>
+                    </div>
+                `;
+            }
+            
+            badgeContainer.innerHTML = badgeHTML;
+        }
+
+        // Reflection System
+        function saveReflection() {
+            const learned = document.getElementById('learned').value;
+            const difficult = document.getElementById('difficult').value;
+            const strategies = document.getElementById('strategies').value;
+            
+            if (learned && difficult && strategies) {
+                showNotification('💭 Reflexão salva com sucesso! Parabéns pela metacognição.');
+                addXP(50);
+            } else {
+                showNotification('📝 Preencha todos os campos da reflexão.', 'error');
+            }
+        }
+
+        // Utility Functions
+        function restartAdventure() {
+            // Reset game state
+            gameState = {
+                currentScreen: 'welcome',
+                character: null,
+                xp: 0,
+                level: 1,
+                progress: 0,
+                completedActivities: {
+                    petroleumVideo: false,
+                    petroleumDragDrop: false,
+                    polymersVideo: false,
+                    polymersQuiz: false,
+                    polymersChoice: false,
+                    radiationVideo: false,
+                    radiationDragDrop: false,
+                    halflifeVideo: false,
+                    halflifeQuiz: false,
+                    nuclearVideo: false,
+                    nuclearQuiz: false,
+                    finalBattle: false
+                },
+                badges: [],
+                finalScore: 0,
+                answers: {
+                    petroleum: {},
+                    polymers: {},
+                    radiation: {},
+                    nuclear: {},
+                    final: {}
+                }
+            };
+            
+            // Reset drag drop state
+            dragDropState = {
+                petroleum: {
+                    correct: {
+                        'gasolina': '30-200',
+                        'querosene': '150-300', 
+                        'diesel': '200-350',
+                        'asfalto': '350+'
+                    },
+                    userAnswers: {}
+                },
+                radiation: {
+                    correct: {
+                        'alpha': 'low',
+                        'beta': 'medium',
+                        'gamma': 'high'
+                    },
+                    userAnswers: {}
+                }
+            };
+            
+            // Reset UI
+            updateUI();
+            goToScreen('welcome');
+            
+            // Reset forms and buttons
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            document.querySelectorAll('.feedback').forEach(fb => {
+                fb.style.display = 'none';
+            });
+            
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            });
+            
+            // Re-enable specific disabled buttons
+            document.getElementById('startMissionBtn').disabled = true;
+            document.getElementById('toPolymersBtn').disabled = true;
+            document.getElementById('toRadioactivityBtn').disabled = true;
+            document.getElementById('toNuclearBtn').disabled = true;
+            document.getElementById('toFinalBtn').disabled = true;
+            document.getElementById('showEndingBtn').disabled = true;
+            
+            showNotification('🔄 Aventura reiniciada! Boa sorte, cientista!');
+        }
+
+        function exportResults() {
+            const results = {
+                character: gameState.character,
+                finalScore: gameState.finalScore,
+                xp: gameState.xp,
+                level: gameState.level,
+                badges: gameState.badges,
+                completedActivities: gameState.completedActivities,
+                timestamp: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(results, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `chemmatrix-results-${Date.now()}.json`;
+            link.click();
+            
+            URL.revokeObjectURL(url);
+            showNotification('📊 Resultados exportados com sucesso!');
+        }
+
+        // Initialize drag and drop when screens are loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup radiation drag drop
+            setTimeout(() => {
+                setupRadiationDragDrop();
+            }, 1000);
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                // Allow ESC key to go back
+                const backButton = document.querySelector('.screen.active .btn-secondary');
+                if (backButton && backButton.textContent.includes('←')) {
+                    backButton.click();
+                }
+            }
+        });
+
+        // Initialize UI
+        updateUI();
+    </script>
+</body>
+</html>
